@@ -63,7 +63,7 @@ def upload_to_bigquery():
         source_format = bigquery.SourceFormat.CSV,
         allow_quoted_newlines = True
     )
-    uri = "gs://us-central1-capstone-compos-332610d3-bucket/data/final_df.csv"
+    uri = "gs://us-central1-capstone-compos-0e58c11a-bucket/data/final_df.csv"
     load_job = client.load_table_from_uri(
         uri, table_id, job_config = job_config
     )
@@ -84,11 +84,13 @@ upload_to_bigquery_task = PythonOperator(
     python_callable = upload_to_bigquery,
     dag = dag
 )
+'''
 clean_dataframe_task = PythonOperator(
     task_id = "clean_dataframe_task",
     python_callable = clean_dataframe,
     dag = dag
 )
+'''
 start >> combine_dataframes_task >> upload_to_bigquery_task >> end
 
 
